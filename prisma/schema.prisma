@@ -1,0 +1,50 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("POSTGRES_PRISMA_URL")
+}
+
+model Admin {
+  username String @id @unique
+  name     String
+  password String
+
+  @@map("admins")
+}
+
+model Customer {
+  phone   String  @id @unique
+  name    String
+  age     Int
+  gender  String
+  address String?
+  Room    Room[]
+
+  @@map("customers")
+}
+
+model Booking {
+  id             Int      @id @unique @default(autoincrement())
+  customer_phone String
+  days           Int
+  rooms          Int
+  room_type      String
+  bed_type       String
+  roomNumbers    String[]
+
+  @@map("bookings")
+}
+
+model Room {
+  number         String    @id @unique
+  room_type      String
+  bed_type       String
+  customer_phone String?
+  customer       Customer? @relation(fields: [customer_phone], references: [phone])
+  available      Boolean
+
+  @@map("rooms")
+}

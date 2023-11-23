@@ -1,0 +1,20 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = __importDefault(require("express"));
+const cors_1 = __importDefault(require("cors"));
+const admins_routes_1 = require("./modules/admins/admins.routes");
+const customers_routes_1 = require("./modules/customers/customers.routes");
+const bookings_routes_1 = require("./modules/bookings/bookings.routes");
+const rooms_routes_1 = require("./modules/rooms/rooms.routes");
+const app = (0, express_1.default)();
+app.use(express_1.default.json());
+app.use((0, cors_1.default)());
+app.use(express_1.default.urlencoded({ extended: true }));
+app.use("/api/v1/admins", admins_routes_1.AdminsRoute);
+app.use("/api/v1/customers", customers_routes_1.CustomersRoutes);
+app.use("/api/v1/bookings", bookings_routes_1.BookingsRoutes);
+app.use("/api/v1/rooms", rooms_routes_1.RoomsRoutes);
+exports.default = app;
